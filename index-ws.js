@@ -1,6 +1,7 @@
 const express = require('express');
 const server = require('http').createServer();
-const app = require ('express')();
+const app = express();
+const PORT = 3000;
 
 app.get('/', function(req, res) {
     res.sendFile('index.html', {root: __dirname});
@@ -8,8 +9,7 @@ app.get('/', function(req, res) {
 });
 
 server.on('request', app);
-server.listen(3000, function() {console.log('server started on port 3000');
-})
+server.listen(PORT, function() {console.log('server started on ' + PORT); });
 
 
 /** Begin websocket */
@@ -36,7 +36,8 @@ wss.on('connection' , function connection(ws){
 }); 
 
 wss.broadcast = function broadcast(data){
-    wss.clients.forEach(function each (client){
-        client.send(data);
+    wss.clients.forEach(function each(client){
+        client.send(data);    
     });
+
 }
